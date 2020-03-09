@@ -1,0 +1,19 @@
+{
+    "name": "bdvs/wordpress-integration-tester",
+    "description": "Non-user / UI based integration testing for WordPress",
+    "type": "library",
+    "license": "Apache 2.0",
+    "authors": [
+        {
+            "name": "contact",
+            "email": "contact@bedevious.co.uk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+      "psr-4": {
+        "Wordpress_Integration_Tester\\": "/src/Wordpress_Integration_Tester"
+      }
+    },
+    "require": {}
+}
