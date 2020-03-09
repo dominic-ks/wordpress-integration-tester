@@ -119,17 +119,30 @@ class WIT_Test {
   *
   * Check if two values are equal and return a test result
   *
-  * @param $expected mixed the expected value
-  * @param $actual mixed the actual value
-  * $param $description the test description
+  * @args arr an array of args for this function
+  *  - $expected mixed the expected value
+  *  - $actual mixed the actual value
+  *  - $description str the test description
+  *  - $data arr additional data to pass to the test result
+  *  - $exact bool whether to check for an exact match, uses === if true, == if false
   * @return arr a test result array
   *
   **/
   
-  protected function __are_equal( $expected , $actual , $description , $data = array() ) {
+  protected function __are_equal( $args = array() ) {
+    
+    extract( wp_parse_args( $args , array(
+      'expected' => 0,
+      'actual' => 1,
+      'description' => 'No description was provided.',
+      'data' => array(),
+      'exact' => true,
+    )));
+    
+    $success = ( $exact ) ? $expected === $actual : $expected == $actual;
     
     $this->results[] = array(
-      'success' => ( $expected === $actual ) ? true : false,
+      'success' => $success,
       'description' => $description,
       'class' => get_class( $this ),
       'data' => array_merge( array(
