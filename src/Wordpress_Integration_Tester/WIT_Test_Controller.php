@@ -186,8 +186,9 @@ class WIT_Test_Controller {
       $object->__execute_tests( $this->test_interval );
       
       $results = array_merge( $results , $object->__get_results());
-      $this->current_class_index++;
-      $this->current_method_index = $object->__get_methods_index();
+      $this->current_class_index++;      
+      
+      $this->current_method_index = ( $object->__get_status() !== 'complete' ) ? $object->__get_methods_index() : 0;
       
     }
     

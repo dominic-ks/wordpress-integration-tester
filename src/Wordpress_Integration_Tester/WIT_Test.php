@@ -31,6 +31,15 @@ class WIT_Test {
   
   /**
   *
+  * The status of this test class
+  *
+  **/
+  
+  private $test_status;
+  
+  
+  /**
+  *
   * The class constructor
   *
   * @param $method_index int the method index to start from
@@ -96,6 +105,26 @@ class WIT_Test {
   **/
   
   protected function __close_down() {
+    
+  }
+  
+  
+  /**
+  *
+  * Get the status of the tests in this class
+  *
+  * @param void
+  * @return str the current status, either not-started, testing or complete
+  *
+  **/
+  
+  public function __get_status() {
+    
+    if( $this->current_method_index === 0 ) {
+      return 'not-starter';
+    }
+    
+    return ( $this->current_method_index >= count( $methods )) ? 'complete' : 'testing';
     
   }
   
