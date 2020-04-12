@@ -124,7 +124,7 @@ class WIT_Test {
       return 'not-starter';
     }
     
-    return ( $this->current_method_index >= count( $methods )) ? 'complete' : 'testing';
+    return ( $this->current_method_index >= count( get_class_methods( $this ))) ? 'complete' : 'testing';
     
   }
   
