@@ -124,7 +124,7 @@ class WIT_Test {
       return 'not-starter';
     }
     
-    return ( $this->current_method_index >= count( get_class_methods( $this ))) ? 'complete' : 'testing';
+    return ( $this->current_method_index >= count( $this->__get_class_methods())) ? 'complete' : 'testing';
     
   }
   
@@ -231,7 +231,7 @@ class WIT_Test {
   *
   **/
   
-  private function get_class_methods() {
+  private function __get_class_methods() {
     
     $methods = get_class_methods( $this );
     $return_methods = array();
@@ -262,7 +262,7 @@ class WIT_Test {
   
   public function __execute_tests( $limit = 10 ) {
     
-    $methods = $this->get_class_methods();
+    $methods = $this->__get_class_methods();
     $start_index = $this->current_method_index;
     $limit = ( $start_index + $limit > count( $methods )) ? count( $methods ) : $start_index + $limit;
     
