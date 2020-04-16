@@ -76,7 +76,7 @@ class WIT_Test {
   *
   **/
   
-  public function __get_methods_index() {
+  public function __get_method_index() {
     return $this->current_method_index;
   }
   
@@ -265,18 +265,16 @@ class WIT_Test {
     $methods = $this->__get_class_methods();
     $start_index = $this->current_method_index;
     $limit = ( $start_index + $limit > count( $methods )) ? count( $methods ) : $start_index + $limit;
+      
+    $this->__setup();
     
-    for( $i = $start_index; $i < $limit; $i++ ) {
-      
-      $method = $methods[ $i ];
-      
-      $this->__setup();
-      $this->$method();
-      $this->__close_down();
-      
-      $this->current_method_index++;
-      
+    for( $i = $start_index; $i < $limit; $i++ ) {      
+      $method = $methods[ $i ];      
+      $this->$method();      
+      $this->current_method_index = $this->current_method_index + 1;      
     }
+    
+    $this->__close_down();
     
     return $this;
     

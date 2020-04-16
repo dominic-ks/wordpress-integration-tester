@@ -23,7 +23,7 @@ add_action( 'rest_api_init', function () {
         return array(
           'results' => $controller->__get_results(),
           'class_index' => $controller->__get_class_index(),
-          'methods_index' => $controller->__get_methods_index(),
+          'method_index' => $controller->__get_method_index(),
           'status' => $controller->__get_status(),
         );
       }
