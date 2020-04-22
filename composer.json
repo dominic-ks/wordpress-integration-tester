@@ -2,7 +2,7 @@
     "name": "bdvs/wordpress-integration-tester",
     "description": "Non-user / UI based integration testing for WordPress",
     "type": "library",
-    "license": "Apache 2.0",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "contact",
