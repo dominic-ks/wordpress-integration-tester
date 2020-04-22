@@ -231,7 +231,7 @@ class WIT_Test {
   *
   **/
   
-  private function __get_class_methods() {
+  public function __get_class_methods() {
     
     $methods = get_class_methods( $this );
     $return_methods = array();

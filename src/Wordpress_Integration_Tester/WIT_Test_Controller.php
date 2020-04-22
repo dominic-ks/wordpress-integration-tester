@@ -75,12 +75,12 @@ class WIT_Test_Controller {
   *
   **/
   
-  public function __construct( $class_index = 0 , $method_index = 0  ) {
+  public function __construct( $class_index = 0 , $method_index = 0 , $test_interval = 10  ) {
     $this->classes = $this->get_test_classes();
     $this->current_class_index = $class_index;
     $this->current_method_index = $method_index;
     $this->status = 'started';
-    $this->test_interval = apply_filters( 'wit_test_interval' , 1 );
+    $this->test_interval = apply_filters( 'wit_test_interval' , $test_interval );
   }
   
   
@@ -149,7 +149,7 @@ class WIT_Test_Controller {
   *
   **/
   
-  private function get_test_classes() {
+  public function get_test_classes() {
     
     $classes = array();
     
