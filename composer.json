@@ -13,7 +13,8 @@
     "autoload": {
       "psr-4": {
         "Wordpress_Integration_Tester\\": "/src/Wordpress_Integration_Tester"
-      }
+      },
+      "files": ["src/Wordpress_Integration_Tester/WP_CLI.php"]
     },
     "require": {}
 }

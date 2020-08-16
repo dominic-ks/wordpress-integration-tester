@@ -253,6 +253,20 @@ class WIT_Test {
   
   /**
   *
+  * Get test methods count
+  *
+  * @param void
+  * @return int the number of test methods available
+  *
+  **/
+  
+  public function __get_class_methods_count() {
+    return count( $this->__get_class_methods());
+  }
+  
+  
+  /**
+  *
   * Execute tests
   *
   * @param $limit int the number of tests to run

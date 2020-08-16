@@ -75,7 +75,7 @@ class WIT_Test_Controller {
   *
   **/
   
-  public function __construct( $class_index = 0 , $method_index = 0 , $test_interval = 10  ) {
+  public function __construct( $class_index = 0 , $method_index = 0 , $test_interval = 100  ) {
     $this->classes = $this->get_test_classes();
     $this->current_class_index = $class_index;
     $this->current_method_index = $method_index;
@@ -166,6 +166,44 @@ class WIT_Test_Controller {
   
   /**
   *
+  * Get a count of the text classes
+  *
+  * @param void
+  * @return int the number of test classes
+  *
+  **/
+  
+  public function get_test_classes_count() {
+    return count( $this->get_test_classes());
+  }
+  
+  
+  /**
+  *
+  * Get a count of the total methods to test
+  *
+  * @param void
+  * @return int the total number of test methods
+  *
+  **/
+  
+  public function get_test_methods_count() {
+    
+    $count = 0;
+    $classes = $this->get_test_classes();
+    
+    foreach( $classes as $class ) {
+      $object = new $class;
+      $count = $count + $object->__get_class_methods_count();
+    }
+    
+    return $count;
+    
+  }
+  
+  
+  /**
+  *
   * Execute tests
   *
   * @param void
@@ -174,6 +212,8 @@ class WIT_Test_Controller {
   **/
   
   public function execute_tests() {
+  
+    global $progress;
     
     $results = array();
     $start_index = $this->current_class_index;
@@ -189,8 +229,15 @@ class WIT_Test_Controller {
       
       $this->current_class_index = ( $object->__get_status() !== 'complete' ) ? $this->current_class_index : $this->current_class_index + 1;
       $this->current_method_index = ( $object->__get_status() !== 'complete' ) ? $object->__get_method_index() : 0;
-      break;
       
+      if( get_class( $progress ) === '\WP_CLI\Utils\make_progress_bar' ) {
+        $progress->tick();
+      }
+      
+    }
+      
+    if( get_class( $progress ) === '\WP_CLI\Utils\make_progress_bar' ) {
+      $progress->finish();
     }
     
     $this->status = $this->__get_status();
