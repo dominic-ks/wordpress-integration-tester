@@ -284,6 +284,7 @@ class WIT_Test {
     
     for( $i = $start_index; $i < $limit; $i++ ) {      
       $method = $methods[ $i ];      
+      var_dump( 'Running method: ' . $method );
       $this->$method();      
       $this->current_method_index = $this->current_method_index + 1;      
     }

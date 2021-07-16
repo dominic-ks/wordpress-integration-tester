@@ -206,34 +206,45 @@ class WIT_Test_Controller {
   *
   * Execute tests
   *
-  * @param void
+  * @param $args arr an array of args
+  * - $class a single class to run tests for
   * @return void
   *
   **/
   
-  public function execute_tests() {
+  public function execute_tests( $args = array()) {
   
     global $progress;
+    
+    extract( $args );
     
     $results = array();
     $start_index = $this->current_class_index;
     
-    for( $i = $start_index; $i < count( $this->classes ); $i++ ) {
-      
-      $class = $this->classes[ $i ];
-      $object = new $class( $this->current_method_index );
-      
-      $object->__execute_tests( $this->test_interval );
-      
-      $results = array_merge( $results , $object->__get_results());
-      
-      $this->current_class_index = ( $object->__get_status() !== 'complete' ) ? $this->current_class_index : $this->current_class_index + 1;
-      $this->current_method_index = ( $object->__get_status() !== 'complete' ) ? $object->__get_method_index() : 0;
-      
-      if( get_class( $progress ) === '\WP_CLI\Utils\make_progress_bar' ) {
-        $progress->tick();
+    if( ! $_class_to_test ) {
+      for( $i = $start_index; $i < count( $this->classes ); $i++ ) {
+
+        $class = $this->classes[ $i ];
+        $object = new $class( $this->current_method_index );
+
+        $object->__execute_tests( $this->test_interval );
+
+        $results = array_merge( $results , $object->__get_results());
+
+        $this->current_class_index = ( $object->__get_status() !== 'complete' ) ? $this->current_class_index : $this->current_class_index + 1;
+        $this->current_method_index = ( $object->__get_status() !== 'complete' ) ? $object->__get_method_index() : 0;
+
+        if( get_class( $progress ) === '\WP_CLI\Utils\make_progress_bar' ) {
+          $progress->tick();
+        }
+
       }
-      
+    }
+    
+    if( $_class_to_test ) {
+      $object = new $_class_to_test( $this->current_method_index );
+      $object->__execute_tests( $this->test_interval );
+      $results = array_merge( $results , $object->__get_results());
     }
       
     if( get_class( $progress ) === '\WP_CLI\Utils\make_progress_bar' ) {

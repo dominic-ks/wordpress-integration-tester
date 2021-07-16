@@ -10,19 +10,27 @@ class WIT_CLI {
   *
   * Run tests using the WordPress Integration Tester module
   *
-  * @param void
-  * @return void
+  * --class=<clacc>
+  * : The name of a class if we're just going to run a single test class
+  *
   * @hooked WP_CLI: wp wit run
   *
   **/
 
-  function run() {
+  function run( $args = array() , $assoc_args = array()) {
 
     global $progress;
 
     $controller = new Wordpress_Integration_Tester\WIT_Test_Controller;
     $progress = WP_CLI\Utils\make_progress_bar( 'Executing tests...' , $controller->get_test_methods_count());
-    $controller->execute_tests();
+    
+    $test_args = array();
+    
+    if( $assoc_args['class'] ) {
+      $test_args['_class_to_test'] = $assoc_args['class'];
+    }
+    
+    $controller->execute_tests( $test_args );
     $results = $controller->__get_results();
 
     $results_output = array();
